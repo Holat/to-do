@@ -18,7 +18,7 @@ const List = ({ create }: ListProp) => {
     <View style={[styles.list, create && { backgroundColor: "#E7E7E7" }]}>
       <FlatList
         data={list}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
         renderItem={renderItem}
         // style={[styles.scroll, create && { backgroundColor: "#E7E7E7" }]}
         showsVerticalScrollIndicator={false}
@@ -36,7 +36,7 @@ export default List;
 
 const styles = StyleSheet.create({
   list: {
-    // height: 545,
+    height: "100%",
     backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,

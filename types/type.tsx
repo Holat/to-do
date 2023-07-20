@@ -1,5 +1,5 @@
 type listProp = {
-  id: number;
+  id: string;
   name: string;
   subject: string;
   date: string;

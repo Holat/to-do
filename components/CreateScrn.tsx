@@ -5,9 +5,16 @@ import {
   Pressable,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
+
+import { listProp } from "../types/type";
+import list from "../assets/list";
+import { getRandomLetter, getRandomNumber } from "../constants/FUNT";
 
 import FONT from "../constants/FONT";
 
@@ -17,6 +24,27 @@ type showProp = {
 };
 
 const CreateScrn = ({ create, showCreate }: showProp) => {
+  const [name, setName] = useState("");
+  const [subject, setSubject] = useState("");
+  // const [date, setDate] = useState();
+  // const [time, setTime] = useState();
+  const date = "20/07/23";
+  const time = "21:38";
+  const uniqueId = getRandomLetter() + getRandomNumber();
+
+  const newItem: listProp = { id: uniqueId, name, subject, date, time };
+
+  const handlePress = () => {
+    if (!name || !subject || !date || !time) {
+      Alert.alert("Enter A Task");
+    } else {
+      list.push(newItem);
+      showCreate(false);
+      setName("");
+      setSubject("");
+    }
+  };
+
   if (create) {
     return (
       <KeyboardAvoidingView
@@ -30,13 +58,15 @@ const CreateScrn = ({ create, showCreate }: showProp) => {
             { color: "white", fontSize: 18, fontFamily: FONT.JSemibold },
           ]}
           placeholderTextColor="#FFFFFF"
+          onChangeText={(text) => setName(text)}
         />
         <TextInput
           placeholder="Add Subject"
           style={[styles.input, { backgroundColor: "#F2F2F2" }]}
+          onChangeText={(text) => setSubject(text)}
         />
         <View style={{ height: 200, backgroundColor: "white" }}></View>
-        <Pressable style={styles.create} onPress={() => showCreate(false)}>
+        <Pressable style={styles.create} onPress={handlePress}>
           <Entypo name="plus" size={24} color="white" />
         </Pressable>
       </KeyboardAvoidingView>
