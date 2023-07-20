@@ -2,7 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
 
-const ToDoCard = () => {
+import { todoCardProp } from "../types/type";
+import FONT from "../constants/FONT";
+
+const ToDoCard = ({ item }: todoCardProp) => {
   return (
     <View style={styles.cont}>
       <View style={styles.cont1}>
@@ -10,10 +13,10 @@ const ToDoCard = () => {
           <FontAwesome5 name="clipboard-list" size={24} color="white" />
         </View>
         <View>
-          <Text style={styles.txt1}>Pay Bills</Text>
+          <Text style={styles.txt1}>{item.name}</Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.txt2}>11/20/23</Text>
-            <Text style={styles.txt2}>11:30</Text>
+            <Text style={styles.txt2}>{item.date}</Text>
+            <Text style={styles.txt2}>{item.time}</Text>
           </View>
         </View>
       </View>
@@ -34,11 +37,11 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 20,
     alignItems: "center",
-    marginBottom: 10,
-    backgroundColor: "#E4E4FF",
+    marginBottom: 5,
+    backgroundColor: "#1384F820",
   },
   icon: {
-    backgroundColor: "#6F50FF",
+    backgroundColor: "#1384F8",
     width: 50,
     height: 50,
     borderRadius: 6,
@@ -52,13 +55,13 @@ const styles = StyleSheet.create({
   },
 
   txt1: {
-    fontWeight: "500",
     fontSize: 15,
+    fontFamily: FONT.JBold,
   },
   txt2: {
-    fontWeight: "400",
     fontSize: 12,
     color: "#6E6E6E",
     marginRight: 5,
+    fontFamily: FONT.JRegular,
   },
 });

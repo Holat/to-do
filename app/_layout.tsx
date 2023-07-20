@@ -22,7 +22,12 @@ export const unstable_settings = {
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Jost: require("../assets/fonts/Jost-VariableFont_wght.ttf"),
     ...FontAwesome.font,
+    JRegular: require("../assets/fonts/Jost-Regular.ttf"),
+    JSemibold: require("../assets/fonts/Jost-SemiBold.ttf"),
+    JMedium: require("../assets/fonts/Jost-Medium.ttf"),
+    JBold: require("../assets/fonts/Jost-Bold.ttf"),
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -47,7 +52,7 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen name="modal" options={{ title: "History" }} />
         </Stack>
       </ThemeProvider>
     </>
