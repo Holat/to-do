@@ -5,40 +5,40 @@ import {
   Pressable,
   TextInput,
   KeyboardAvoidingView,
-  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { listProp } from "../types/type";
-import list from "../assets/list";
-import { getRandomLetter, getRandomNumber } from "../constants/FUNT";
-
+import {
+  getRandomLetter,
+  getRandomNumber,
+  getCurrentDateAndTime,
+} from "../constants/FUNT";
 import FONT from "../constants/FONT";
+import { createScreenProp } from "../types/type";
 
-type showProp = {
-  create: boolean;
-  showCreate: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const CreateScrn = ({ create, showCreate }: showProp) => {
+const CreateScrn = ({ create, showCreate }: createScreenProp) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
-  // const [date, setDate] = useState();
-  // const [time, setTime] = useState();
-  const date = "20/07/23";
-  const time = "21:38";
-  const uniqueId = getRandomLetter() + getRandomNumber();
+  const { date, time } = getCurrentDateAndTime();
 
-  const newItem: listProp = { id: uniqueId, name, subject, date, time };
+  const setData = async () => {
+    try {
+      var uniqueId = getRandomLetter() + getRandomNumber();
+      const newItem: any = { name, subject, date, time };
+      await AsyncStorage.setItem(uniqueId, JSON.stringify(newItem));
+    } catch (error) {
+      console.error("error saving data");
+    }
+  };
 
   const handlePress = () => {
     if (!name || !subject || !date || !time) {
-      Alert.alert("Enter A Task");
+      alert("Enter A Task");
     } else {
-      list.push(newItem);
+      setData();
       showCreate(false);
       setName("");
       setSubject("");

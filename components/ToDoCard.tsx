@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
 
-import { todoCardProp } from "../types/type";
+import { DataProp } from "../types/type";
 import FONT from "../constants/FONT";
 
-const ToDoCard = ({ item }: todoCardProp) => {
+const ToDoCard = ({ item }: DataProp) => {
   return (
     <View style={styles.cont}>
       <View style={styles.cont1}>
@@ -13,10 +13,10 @@ const ToDoCard = ({ item }: todoCardProp) => {
           <FontAwesome5 name="clipboard-list" size={24} color="white" />
         </View>
         <View>
-          <Text style={styles.txt1}>{item.name}</Text>
+          <Text style={styles.txt1}>{item.data.name}</Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.txt2}>{item.date}</Text>
-            <Text style={styles.txt2}>{item.time}</Text>
+            <Text style={styles.txt2}>{item.data.date}</Text>
+            <Text style={styles.txt2}>{item.data.time}</Text>
           </View>
         </View>
       </View>

@@ -1,24 +1,39 @@
-import { View, StyleSheet, FlatList } from "react-native";
-import React from "react";
+import { View, StyleSheet, FlatList, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 
 import list from "../assets/list";
 import ToDoCard from "./ToDoCard";
-import { todoCardProp } from "../types/type";
+import { todoCardProp, ListProp, DataProp } from "../types/type";
+import { getAllData } from "../constants/FUNT";
 
-type ListProp = {
-  create: boolean;
-};
-
-const renderItem = ({ item }: todoCardProp) => {
+const renderItem = ({ item }: DataProp) => {
   return <ToDoCard item={item} />;
 };
 
 const List = ({ create }: ListProp) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const allData: any = await getAllData();
+      if (allData) {
+        setData(allData);
+      }
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
+  };
+
   return (
     <View style={[styles.list, create && { backgroundColor: "#E7E7E7" }]}>
       <FlatList
-        data={list}
-        keyExtractor={(item) => item.id}
+        data={data}
+        keyExtractor={(item) => item.key}
         renderItem={renderItem}
         // style={[styles.scroll, create && { backgroundColor: "#E7E7E7" }]}
         showsVerticalScrollIndicator={false}

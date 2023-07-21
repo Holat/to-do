@@ -1,12 +1,24 @@
 import { View, Text, StyleSheet, StatusBar, Pressable } from "react-native";
 import React, { useState } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
 import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
 import List from "../components/List";
 import FONT from "../constants/FONT";
+import { showCreateProp } from "../types/type";
+
+const Head = ({ showCreate }: showCreateProp) => {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <Pressable onPress={() => showCreate(false)}>
+        <Ionicons name="arrow-back-circle-outline" size={30} color="black" />
+      </Pressable>
+      <Text style={styles.header1Txt}>Create To-do</Text>
+    </View>
+  );
+};
 
 const Home = () => {
   const [create, showCreate] = useState(false);
@@ -29,9 +41,11 @@ const Home = () => {
             onPress={handlePress}
             style={[create ? styles.header1 : styles.header]}
           >
-            <Text style={[create ? styles.header1Txt : styles.headerTxt]}>
-              {create ? "Create To-do" : "Tap To Create"}
-            </Text>
+            {create ? (
+              <Head showCreate={showCreate} />
+            ) : (
+              <Text style={styles.headerTxt}>Tap To Create</Text>
+            )}
           </Pressable>
           <CreateScrn create={create} showCreate={showCreate} />
           <List create={create} />
