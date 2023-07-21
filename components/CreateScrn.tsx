@@ -5,6 +5,7 @@ import {
   Pressable,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -36,7 +37,7 @@ const CreateScrn = ({ create, showCreate }: createScreenProp) => {
 
   const handlePress = () => {
     if (!name || !subject || !date || !time) {
-      alert("Enter A Task");
+      Alert.alert("Enter A Task");
     } else {
       setData();
       showCreate(false);
