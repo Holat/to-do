@@ -20,9 +20,9 @@ const List = ({ create }: ListProp) => {
 
   const loadData = async () => {
     try {
-      const allData: any = await getAllData();
+      const allData = await getAllData();
       if (allData) {
-        setData(allData);
+        setData(allData as any);
       }
     } catch (error) {
       console.error("Error loading data:", error);
