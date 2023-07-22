@@ -15,10 +15,14 @@ type showCreateProp = {
 type createScreenProp = {
   create: boolean;
   showCreate: React.Dispatch<React.SetStateAction<boolean>>;
+  setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
+  taskItem: listProp[];
 };
 
 type ListProp = {
   create: boolean;
+  taskItem: listProp[];
+  setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
 };
 
 // type DataItems = {
@@ -33,10 +37,14 @@ type ListProp = {
 
 type DataProp = {
   item: listProp;
+  index: number;
 };
 
 type todoCardProp = {
   item: listProp;
+  index: number;
+  setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
+  taskItem: listProp[];
 };
 export {
   listProp,

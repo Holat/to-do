@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 30,
     padding: 30,
-    flex: 1,
   },
   gText: {
     color: "white",

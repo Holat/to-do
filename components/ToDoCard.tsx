@@ -5,7 +5,13 @@ import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
 import { todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
 
-const ToDoCard = ({ item }: todoCardProp) => {
+const ToDoCard = ({ item, index, setTaskItem, taskItem }: todoCardProp) => {
+  const handlePress = () => {
+    const itemCopy = [...taskItem];
+    itemCopy.splice(index, 1);
+    setTaskItem(itemCopy);
+  };
+
   return (
     <View style={styles.cont}>
       <View style={styles.cont1}>
@@ -21,7 +27,7 @@ const ToDoCard = ({ item }: todoCardProp) => {
         </View>
       </View>
       <View style={styles.cont1}>
-        <Pressable>
+        <Pressable onPress={handlePress}>
           <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
         </Pressable>
         <FontAwesome name="check" size={24} color="#1CB674" />

@@ -18,10 +18,15 @@ import {
   getCurrentDateAndTime,
 } from "../constants/FUNT";
 import FONT from "../constants/FONT";
-import { createScreenProp } from "../types/type";
+import { createScreenProp, listProp } from "../types/type";
 import list from "../assets/list";
 
-const CreateScrn = ({ create, showCreate }: createScreenProp) => {
+const CreateScrn = ({
+  create,
+  showCreate,
+  setTaskItem,
+  taskItem,
+}: createScreenProp) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const { date, time } = getCurrentDateAndTime();
@@ -43,7 +48,7 @@ const CreateScrn = ({ create, showCreate }: createScreenProp) => {
     if (!name || !subject || !date || !time) {
       Alert.alert("Enter A Task");
     } else {
-      list.push(newItem);
+      setTaskItem([...taskItem, newItem]);
       showCreate(false);
       setName("");
       setSubject("");

@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
 import List from "../components/List";
 import FONT from "../constants/FONT";
-import { showCreateProp } from "../types/type";
+import { listProp, showCreateProp } from "../types/type";
 
 const Head = ({ showCreate }: showCreateProp) => {
   return (
@@ -22,6 +22,11 @@ const Head = ({ showCreate }: showCreateProp) => {
 
 const Home = () => {
   const [create, showCreate] = useState(false);
+  const [taskItem, setTaskItem] = useState<listProp[]>([]);
+
+  // const handleData = (data) => {
+  //   setTaskItem(data);
+  // };
 
   const handlePress = () => {
     showCreate(true);
@@ -47,8 +52,13 @@ const Home = () => {
               <Text style={styles.headerTxt}>Tap To Create</Text>
             )}
           </Pressable>
-          <CreateScrn create={create} showCreate={showCreate} />
-          <List create={create} />
+          <CreateScrn
+            create={create}
+            showCreate={showCreate}
+            setTaskItem={setTaskItem}
+            taskItem={taskItem}
+          />
+          <List create={create} taskItem={taskItem} setTaskItem={setTaskItem} />
         </View>
       </View>
     </View>
@@ -63,7 +73,6 @@ const styles = StyleSheet.create({
   },
   todoCont: {
     backgroundColor: "#E7E7E7",
-    flex: 5,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   },
