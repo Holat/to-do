@@ -26,9 +26,14 @@ const ToDoCard = ({
   };
 
   return (
-    <View style={styles.cont}>
+    <View style={[styles.cont, DarkMode && { backgroundColor: "#001f3f40" }]}>
       <View style={styles.cont1}>
-        <View style={styles.icon}>
+        <View
+          style={[
+            styles.icon,
+            DarkMode && { backgroundColor: dark.background2 },
+          ]}
+        >
           <FontAwesome5 name="clipboard-list" size={24} color="white" />
         </View>
         <View>

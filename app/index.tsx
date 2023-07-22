@@ -69,25 +69,23 @@ const Home = () => {
             : {},
         ]}
       >
-        <View style={create && styles.newCont}>
-          <Pressable
-            onPress={handlePress}
-            style={[create ? styles.header1 : styles.header]}
-          >
-            {create ? (
-              <Head showCreate={showCreate} />
-            ) : (
-              <Text style={styles.headerTxt}>Tap To Create</Text>
-            )}
-          </Pressable>
-          <CreateScrn
-            create={create}
-            showCreate={showCreate}
-            setTaskItem={setTaskItem}
-            taskItem={taskItem}
-          />
-          <List create={create} taskItem={taskItem} setTaskItem={setTaskItem} />
-        </View>
+        <Pressable
+          onPress={handlePress}
+          style={[create ? styles.header1 : styles.header]}
+        >
+          {create ? (
+            <Head showCreate={showCreate} />
+          ) : (
+            <Text style={styles.headerTxt}>Tap To Create</Text>
+          )}
+        </Pressable>
+        <CreateScrn
+          create={create}
+          showCreate={showCreate}
+          setTaskItem={setTaskItem}
+          taskItem={taskItem}
+        />
+        <List create={create} taskItem={taskItem} setTaskItem={setTaskItem} />
       </View>
     </View>
   );
@@ -103,6 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E7E7E7",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+    flex: 1,
   },
   history: {
     position: "absolute",
@@ -122,7 +121,8 @@ const styles = StyleSheet.create({
     fontFamily: FONT.JSemibold,
   },
   header1: {
-    marginVertical: 20,
+    marginTop: 30,
+    marginBottom: 20,
     paddingLeft: 20,
   },
   header1Txt: {

@@ -1,12 +1,13 @@
 import { View, StyleSheet, FlatList, useColorScheme, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { light, dark } from "../constants/Colors";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import ToDoCard from "./ToDoCard";
 import { ListProp, DataProp } from "../types/type";
 import FONT from "../constants/FONT";
+import list from "../assets/list";
 // import { getAllData } from "../constants/FUNT";
 
 const List = ({ create, taskItem, setTaskItem }: ListProp) => {
@@ -23,6 +24,21 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
     );
   };
 
+  const Empty = () => {
+    return (
+      <View style={styles.emptyCont}>
+        <FontAwesome5
+          name="clipboard-list"
+          size={150}
+          color={DarkMode ? dark.background3 : light.background3}
+        />
+        <Text style={[styles.empty, DarkMode && { color: dark.background3 }]}>
+          No To-do
+        </Text>
+      </View>
+    );
+  };
+
   return (
     <View
       style={[
@@ -36,22 +52,21 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
           : {},
       ]}
     >
-      <FlatList
-        data={taskItem}
-        keyExtractor={(item) => item.key}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        scrollEnabled={true}
-        contentContainerStyle={{
-          paddingHorizontal: 10,
-          borderRadius: 50,
-        }}
-        ListEmptyComponent={() => (
-          <Text style={[styles.empty, DarkMode && { color: dark.text3 }]}>
-            Empty
-          </Text>
-        )}
-      />
+      {taskItem.length > 0 ? (
+        <FlatList
+          data={list}
+          keyExtractor={(item) => item.key}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={true}
+          contentContainerStyle={{
+            paddingHorizontal: 10,
+            borderRadius: 50,
+          }}
+        />
+      ) : (
+        <Empty />
+      )}
     </View>
   );
 };
@@ -60,22 +75,29 @@ export default List;
 
 const styles = StyleSheet.create({
   list: {
-    height: "100%",
     backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 10,
     paddingTop: 30,
+    paddingBottom: 5,
+    flex: 1,
+    flexGrow: 1,
   },
   scroll: {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     backgroundColor: "white",
   },
+  emptyCont: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   empty: {
-    fontFamily: FONT.JSemibold,
+    fontFamily: FONT.JBold,
     color: "#6E6E6E",
     textAlign: "center",
-    fontSize: 15,
+    fontSize: 20,
   },
 });

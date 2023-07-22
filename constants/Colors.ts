@@ -20,7 +20,7 @@ const dark = {
   text2: "#fff",
   text3: "#6E6E6E",
   background1: "#000",
-  background2: "#1384F8",
+  background2: "#004080",
   background3: "#333333",
   background3A: "#CCCCCC",
   tabIconDefault: "#ccc",
