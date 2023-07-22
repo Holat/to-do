@@ -19,27 +19,31 @@ import {
 } from "../constants/FUNT";
 import FONT from "../constants/FONT";
 import { createScreenProp } from "../types/type";
+import list from "../assets/list";
 
 const CreateScrn = ({ create, showCreate }: createScreenProp) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const { date, time } = getCurrentDateAndTime();
+  const key = getRandomLetter() + getRandomNumber();
 
-  const setData = async () => {
-    try {
-      var uniqueId = getRandomLetter() + getRandomNumber();
-      const newItem: any = { name, subject, date, time };
-      await AsyncStorage.setItem(uniqueId, JSON.stringify(newItem));
-    } catch (error) {
-      console.error("error saving data");
-    }
-  };
+  // const setData = async () => {
+  //   try {
+  //     var uniqueId = getRandomLetter() + getRandomNumber();
+  //     const newItem: any = { name, subject, date, time };
+  //     await AsyncStorage.setItem(uniqueId, JSON.stringify(newItem));
+  //   } catch (error) {
+  //     console.error("error saving data");
+  //   }
+  // };
+
+  const newItem = { key, name, subject, date, time };
 
   const handlePress = () => {
     if (!name || !subject || !date || !time) {
       Alert.alert("Enter A Task");
     } else {
-      setData();
+      list.push(newItem);
       showCreate(false);
       setName("");
       setSubject("");

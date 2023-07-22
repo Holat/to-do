@@ -1,13 +1,11 @@
+import { GestureResponderEvent } from "react-native";
+
 type listProp = {
   key: string;
   name: string;
   subject: string;
   date: string;
   time: string;
-};
-
-type todoCardProp = {
-  item: listProp;
 };
 
 type showCreateProp = {
@@ -23,26 +21,29 @@ type ListProp = {
   create: boolean;
 };
 
-type DataItems = {
-  key: string;
-  data: {
-    name: string;
-    subject: string;
-    date: string;
-    time: string;
-  };
-};
+// type DataItems = {
+//   key: string;
+//   data: {
+//     name: string;
+//     subject: string;
+//     date: string;
+//     time: string;
+//   };
+// };
 
 type DataProp = {
-  item: DataItems;
+  item: listProp;
 };
 
+type todoCardProp = {
+  item: listProp;
+};
 export {
   listProp,
   todoCardProp,
   showCreateProp,
   createScreenProp,
   ListProp,
-  DataItems,
+  // DataItems,
   DataProp,
 };

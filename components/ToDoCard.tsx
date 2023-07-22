@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
 
-import { DataProp } from "../types/type";
+import { todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
 
-const ToDoCard = ({ item }: DataProp) => {
+const ToDoCard = ({ item }: todoCardProp) => {
   return (
     <View style={styles.cont}>
       <View style={styles.cont1}>
@@ -13,15 +13,17 @@ const ToDoCard = ({ item }: DataProp) => {
           <FontAwesome5 name="clipboard-list" size={24} color="white" />
         </View>
         <View>
-          <Text style={styles.txt1}>{item.data.name}</Text>
+          <Text style={styles.txt1}>{item.name}</Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.txt2}>{item.data.date}</Text>
-            <Text style={styles.txt2}>{item.data.time}</Text>
+            <Text style={styles.txt2}>{item.date}</Text>
+            <Text style={styles.txt2}>{item.time}</Text>
           </View>
         </View>
       </View>
       <View style={styles.cont1}>
-        <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
+        <Pressable>
+          <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
+        </Pressable>
         <FontAwesome name="check" size={24} color="#1CB674" />
       </View>
     </View>

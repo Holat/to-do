@@ -5,34 +5,20 @@ import { Ionicons } from "@expo/vector-icons";
 
 import list from "../assets/list";
 import ToDoCard from "./ToDoCard";
-import { todoCardProp, ListProp, DataProp } from "../types/type";
-import { getAllData } from "../constants/FUNT";
-
-const renderItem = ({ item }: DataProp) => {
-  return <ToDoCard item={item} />;
-};
+import { ListProp, DataProp } from "../types/type";
+// import { getAllData } from "../constants/FUNT";
 
 const List = ({ create }: ListProp) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    loadData();
-  }, []);
+  // const [data, setData] = useState<DataItems[]>([]);
 
-  const loadData = async () => {
-    try {
-      const allData = await getAllData();
-      if (allData) {
-        setData(allData as any);
-      }
-    } catch (error) {
-      console.error("Error loading data:", error);
-    }
+  const renderItem = ({ item }: DataProp) => {
+    return <ToDoCard item={item} />;
   };
 
   return (
     <View style={[styles.list, create && { backgroundColor: "#E7E7E7" }]}>
       <FlatList
-        data={data}
+        data={list}
         keyExtractor={(item) => item.key}
         renderItem={renderItem}
         // style={[styles.scroll, create && { backgroundColor: "#E7E7E7" }]}
