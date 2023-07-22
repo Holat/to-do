@@ -6,6 +6,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Alert,
+  useColorScheme,
 } from "react-native";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -20,6 +21,7 @@ import {
 import FONT from "../constants/FONT";
 import { createScreenProp, listProp } from "../types/type";
 import list from "../assets/list";
+import { light, dark } from "../constants/Colors";
 
 const CreateScrn = ({
   create,
@@ -31,6 +33,7 @@ const CreateScrn = ({
   const [subject, setSubject] = useState("");
   const { date, time } = getCurrentDateAndTime();
   const key = getRandomLetter() + getRandomNumber();
+  const DarkMode = useColorScheme() === "dark";
 
   // const setData = async () => {
   //   try {
@@ -66,17 +69,35 @@ const CreateScrn = ({
           style={[
             styles.input,
             { color: "white", fontSize: 18, fontFamily: FONT.JSemibold },
+            DarkMode && { backgroundColor: dark.background2 },
           ]}
           placeholderTextColor="#FFFFFF"
           onChangeText={(text) => setName(text)}
         />
         <TextInput
           placeholder="Add Subject"
-          style={[styles.input, { backgroundColor: "#F2F2F2" }]}
+          style={[
+            styles.input,
+            {
+              backgroundColor: DarkMode ? dark.background3 : light.background1,
+            },
+          ]}
           onChangeText={(text) => setSubject(text)}
+          placeholderTextColor={DarkMode ? dark.text3 : ""}
         />
-        <View style={{ height: 200, backgroundColor: "white" }}></View>
-        <Pressable style={styles.create} onPress={handlePress}>
+        <View
+          style={{
+            height: 200,
+            backgroundColor: DarkMode ? dark.background1 : light.background1,
+          }}
+        ></View>
+        <Pressable
+          style={[
+            styles.create,
+            DarkMode && { backgroundColor: dark.background2 },
+          ]}
+          onPress={handlePress}
+        >
           <Entypo name="plus" size={24} color="white" />
         </Pressable>
       </KeyboardAvoidingView>

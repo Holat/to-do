@@ -1,11 +1,24 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
 
 import { todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
+import { light, dark } from "../constants/Colors";
 
-const ToDoCard = ({ item, index, setTaskItem, taskItem }: todoCardProp) => {
+const ToDoCard = ({
+  item,
+  index,
+  setTaskItem,
+  taskItem,
+  DarkMode,
+}: todoCardProp) => {
   const handlePress = () => {
     const itemCopy = [...taskItem];
     itemCopy.splice(index, 1);
@@ -19,7 +32,9 @@ const ToDoCard = ({ item, index, setTaskItem, taskItem }: todoCardProp) => {
           <FontAwesome5 name="clipboard-list" size={24} color="white" />
         </View>
         <View>
-          <Text style={styles.txt1}>{item.name}</Text>
+          <Text style={[styles.txt1, DarkMode && { color: dark.text }]}>
+            {item.name}
+          </Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.txt2}>{item.date}</Text>
             <Text style={styles.txt2}>{item.time}</Text>

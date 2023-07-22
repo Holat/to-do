@@ -45,6 +45,7 @@ type todoCardProp = {
   index: number;
   setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
   taskItem: listProp[];
+  DarkMode: boolean;
 };
 export {
   listProp,

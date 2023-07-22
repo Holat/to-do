@@ -1,5 +1,6 @@
-import { View, StyleSheet, FlatList, Pressable, Text } from "react-native";
+import { View, StyleSheet, FlatList, useColorScheme, Text } from "react-native";
 import React, { useEffect, useState } from "react";
+import { light, dark } from "../constants/Colors";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Ionicons } from "@expo/vector-icons";
 
@@ -9,6 +10,7 @@ import FONT from "../constants/FONT";
 // import { getAllData } from "../constants/FUNT";
 
 const List = ({ create, taskItem, setTaskItem }: ListProp) => {
+  const DarkMode = useColorScheme() === "dark";
   const renderItem = ({ item, index }: DataProp) => {
     return (
       <ToDoCard
@@ -16,12 +18,24 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
         index={index}
         setTaskItem={setTaskItem}
         taskItem={taskItem}
+        DarkMode={DarkMode}
       />
     );
   };
 
   return (
-    <View style={[styles.list, create && { backgroundColor: "#E7E7E7" }]}>
+    <View
+      style={[
+        styles.list,
+        !create && DarkMode
+          ? { backgroundColor: dark.background1 }
+          : create && DarkMode
+          ? { backgroundColor: dark.background3 }
+          : create && !DarkMode
+          ? { backgroundColor: light.background3 }
+          : {},
+      ]}
+    >
       <FlatList
         data={taskItem}
         keyExtractor={(item) => item.key}
@@ -32,7 +46,11 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
           paddingHorizontal: 10,
           borderRadius: 50,
         }}
-        ListEmptyComponent={() => <Text style={styles.empty}>Empty</Text>}
+        ListEmptyComponent={() => (
+          <Text style={[styles.empty, DarkMode && { color: dark.text3 }]}>
+            Empty
+          </Text>
+        )}
       />
     </View>
   );

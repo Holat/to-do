@@ -1,12 +1,16 @@
-import { Platform, StyleSheet } from "react-native";
-
-import { Text, View } from "../components/Themed";
-import List from "../components/List";
-import list from "../assets/list";
+import { StyleSheet, useColorScheme, View } from "react-native";
+import { dark } from "../constants/Colors";
 
 export default function ModalScreen() {
+  const DarkMode = useColorScheme() === "dark";
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        DarkMode && { backgroundColor: dark.background1 },
+      ]}
+    >
       <View></View>
       {/* <List create={false} taskItem={list} /> */}
     </View>
@@ -15,7 +19,8 @@ export default function ModalScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     paddingBottom: 50,
+    backgroundColor: "white",
   },
 });

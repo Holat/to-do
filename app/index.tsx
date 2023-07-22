@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, StatusBar, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  Pressable,
+  useColorScheme,
+} from "react-native";
 import React, { useState } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
@@ -8,21 +15,12 @@ import CreateScrn from "../components/CreateScrn";
 import List from "../components/List";
 import FONT from "../constants/FONT";
 import { listProp, showCreateProp } from "../types/type";
-
-const Head = ({ showCreate }: showCreateProp) => {
-  return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-      <Pressable onPress={() => showCreate(false)}>
-        <Ionicons name="arrow-back-circle-outline" size={30} color="black" />
-      </Pressable>
-      <Text style={styles.header1Txt}>Create To-do</Text>
-    </View>
-  );
-};
+import { light, dark } from "../constants/Colors";
 
 const Home = () => {
   const [create, showCreate] = useState(false);
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
+  const DarkMode = useColorScheme() === "dark";
 
   // const handleData = (data) => {
   //   setTaskItem(data);
@@ -32,15 +30,45 @@ const Home = () => {
     showCreate(true);
   };
 
+  const Head = ({ showCreate }: showCreateProp) => {
+    return (
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+        <Pressable onPress={() => showCreate(false)}>
+          <Ionicons
+            name="arrow-back-circle-outline"
+            size={30}
+            color={DarkMode ? dark.text2 : light.text2}
+          />
+        </Pressable>
+        <Text style={[styles.header1Txt, DarkMode && { color: dark.text }]}>
+          Create To-do
+        </Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.cont}>
+    <View
+      style={[styles.cont, DarkMode && { backgroundColor: dark.background2 }]}
+    >
       <Link href={"modal"} asChild>
         <Pressable style={styles.history}>
           <FontAwesome5 name="history" size={24} color="lightgray" />
         </Pressable>
       </Link>
       <Header />
-      <View style={[styles.todoCont, create && { backgroundColor: "white" }]}>
+      <View
+        style={[
+          styles.todoCont,
+          create && DarkMode
+            ? { backgroundColor: dark.background1 }
+            : create && !DarkMode
+            ? { backgroundColor: light.background1 }
+            : !create && DarkMode
+            ? { backgroundColor: dark.background3 }
+            : {},
+        ]}
+      >
         <View style={create && styles.newCont}>
           <Pressable
             onPress={handlePress}
