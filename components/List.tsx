@@ -54,7 +54,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
     >
       {taskItem.length > 0 ? (
         <FlatList
-          data={list}
+          data={taskItem}
           keyExtractor={(item) => item.key}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
