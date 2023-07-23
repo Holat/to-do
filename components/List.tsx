@@ -59,10 +59,6 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           scrollEnabled={true}
-          contentContainerStyle={{
-            paddingHorizontal: 10,
-            borderRadius: 50,
-          }}
         />
       ) : (
         <Empty />
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     paddingTop: 30,
     paddingBottom: 5,
     flex: 1,
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
   },
   empty: {
     fontFamily: FONT.JBold,
-    color: "#6E6E6E",
+    color: "#CCCCCC",
     textAlign: "center",
     fontSize: 20,
   },

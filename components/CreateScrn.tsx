@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import "react-native-get-random-values";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   getRandomLetter,
@@ -19,8 +19,8 @@ import {
   getCurrentDateAndTime,
 } from "../constants/FUNT";
 import FONT from "../constants/FONT";
-import { createScreenProp, listProp } from "../types/type";
-import list from "../assets/list";
+import { createScreenProp } from "../types/type";
+// import list from "../assets/list";
 import { light, dark } from "../constants/Colors";
 
 const CreateScrn = ({
@@ -80,10 +80,11 @@ const CreateScrn = ({
             styles.input,
             {
               backgroundColor: DarkMode ? dark.background3 : light.background1,
+              color: DarkMode ? dark.text : light.text2,
             },
           ]}
           onChangeText={(text) => setSubject(text)}
-          placeholderTextColor={DarkMode ? dark.text3 : ""}
+          placeholderTextColor={DarkMode ? dark.text3 : light.text3}
         />
         <View
           style={{
