@@ -1,4 +1,4 @@
-import { GestureResponderEvent } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type listProp = {
   key: string;
@@ -42,13 +42,34 @@ type historyCardProp = {
   DarkMode: boolean;
   item: listProp;
 };
+
+type RootStackParamList = {
+  loginScreen: undefined;
+  index: undefined;
+  modal: undefined;
+};
+
+type LoginScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, "loginScreen">;
+};
+
+type HomeScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, "index">;
+};
+
+type ModalScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, "modal">;
+};
+
 export {
   listProp,
   todoCardProp,
   showCreateProp,
   createScreenProp,
   ListProp,
-  // DataItems,
   DataProp,
   historyCardProp,
+  LoginScreenProps,
+  HomeScreenProps,
+  ModalScreenProps,
 };

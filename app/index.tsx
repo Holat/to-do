@@ -6,24 +6,37 @@ import {
   Pressable,
   useColorScheme,
 } from "react-native";
-import React, { useState } from "react";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import React, { useState, useEffect } from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { useNavigation } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
 import List from "../components/List";
 import FONT from "../constants/FONT";
-import { listProp, showCreateProp } from "../types/type";
+import { listProp, HomeScreenProps } from "../types/type";
 import { light, dark } from "../constants/Colors";
 import Head from "../components/Head";
 
-const Home = () => {
-  const navigation = useNavigation();
+const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [create, showCreate] = useState(false);
+  const [username, setUser] = useState<string>("");
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
   const DarkMode = useColorScheme() === "dark";
+
+  useEffect(() => {
+    checkUsername();
+  }, []);
+
+  const checkUsername = async () => {
+    const username = await AsyncStorage.getItem("username");
+    if (!username) {
+      navigation.navigate("loginScreen");
+    } else {
+      setUser(username);
+    }
+  };
 
   return (
     <View
@@ -34,7 +47,7 @@ const Home = () => {
           <FontAwesome5 name="history" size={24} color="lightgray" />
         </Pressable>
       </Link>
-      <Header />
+      <Header user={username} />
       <View
         style={[
           styles.todoCont,

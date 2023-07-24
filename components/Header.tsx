@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import FONT from "../constants/FONT";
 
-const Header = () => {
+const Header = ({ user }: { user: string }) => {
   const date = new Date();
   const hour = date.getHours();
   const month = Intl.DateTimeFormat("en", { month: "short" }).format(date);
@@ -28,7 +28,7 @@ const Header = () => {
     <View style={styles.Cont}>
       <View>
         <Text style={styles.gText}>Good {timeOfDay}</Text>
-        <Text style={styles.gText1}>Holat</Text>
+        <Text style={styles.gText1}>{user}</Text>
         <View style={styles.gText23}>
           <Text style={styles.gText2}>TASK TO DO</Text>
           <Text style={styles.gText3}>

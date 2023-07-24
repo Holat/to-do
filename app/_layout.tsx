@@ -51,6 +51,7 @@ function RootLayoutNav() {
     <>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
+          <Stack.Screen name="loginScreen" options={{ headerShown: false }} />
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ title: "History" }} />
         </Stack>
