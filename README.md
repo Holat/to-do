@@ -3,6 +3,7 @@ To-do App (React Native - expo)
 
 # Description
 - Used stack navigation at the root (The only navigation in the app)
+- Each todo item card shows the time and date it was created dynamically
 - "useColorScheme()" to implement the dark mode
 - For todo list info is added to an array so it won't be stored and will be removed when the app is reloaded
 - "AsycStorage" would be used to update the app later
