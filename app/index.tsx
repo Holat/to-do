@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useNavigation } from "expo-router";
 
 import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
@@ -16,32 +17,13 @@ import List from "../components/List";
 import FONT from "../constants/FONT";
 import { listProp, showCreateProp } from "../types/type";
 import { light, dark } from "../constants/Colors";
+import Head from "../components/Head";
 
 const Home = () => {
+  const navigation = useNavigation();
   const [create, showCreate] = useState(false);
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
   const DarkMode = useColorScheme() === "dark";
-
-  const handlePress = () => {
-    showCreate(true);
-  };
-
-  const Head = ({ showCreate }: showCreateProp) => {
-    return (
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-        <Pressable onPress={() => showCreate(false)}>
-          <Ionicons
-            name="arrow-back-circle-outline"
-            size={30}
-            color={DarkMode ? dark.text2 : light.text2}
-          />
-        </Pressable>
-        <Text style={[styles.header1Txt, DarkMode && { color: dark.text }]}>
-          Create To-do
-        </Text>
-      </View>
-    );
-  };
 
   return (
     <View
@@ -66,7 +48,7 @@ const Home = () => {
         ]}
       >
         <Pressable
-          onPress={handlePress}
+          onPress={() => showCreate(true)}
           style={[create ? styles.header1 : styles.header]}
         >
           {create ? (
