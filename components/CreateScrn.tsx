@@ -8,10 +8,10 @@ import {
   Alert,
   useColorScheme,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
 import "react-native-get-random-values";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   getRandomLetter,
@@ -19,7 +19,7 @@ import {
   getCurrentDateAndTime,
 } from "../constants/FUNT";
 import FONT from "../constants/FONT";
-import { createScreenProp } from "../types/type";
+import { createScreenProp, listProp } from "../types/type";
 // import list from "../assets/list";
 import { light, dark } from "../constants/Colors";
 
@@ -35,23 +35,26 @@ const CreateScrn = ({
   const key = getRandomLetter() + getRandomNumber();
   const DarkMode = useColorScheme() === "dark";
 
-  // const setData = async () => {
-  //   try {
-  //     var uniqueId = getRandomLetter() + getRandomNumber();
-  //     const newItem: any = { name, subject, date, time };
-  //     await AsyncStorage.setItem(uniqueId, JSON.stringify(newItem));
-  //   } catch (error) {
-  //     console.error("error saving data");
-  //   }
-  // };
+  const setData = async (newTask: listProp) => {
+    try {
+      const Data = await AsyncStorage.getItem("itemData");
+      let DataArray = Data ? JSON.parse(Data) : [];
 
-  const newItem = { key, name, subject, date, time };
+      const newItem = { key, name, subject, date, time };
+      const newDataArray = [...DataArray, newTask];
+      setTaskItem(newDataArray);
+      await AsyncStorage.setItem("itemData", JSON.stringify(newDataArray));
+    } catch (error) {
+      console.error("error saving data");
+    }
+  };
 
   const handlePress = () => {
     if (!name || !subject || !date || !time) {
       Alert.alert("Enter A Task");
     } else {
-      setTaskItem([...taskItem, newItem]);
+      const newItem = { key, name, subject, date, time };
+      setData(newItem);
       showCreate(false);
       setName("");
       setSubject("");

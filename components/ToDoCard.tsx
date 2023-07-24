@@ -7,8 +7,9 @@ import {
 } from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { todoCardProp } from "../types/type";
+import { listProp, todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
 import { light, dark } from "../constants/Colors";
 
@@ -19,10 +20,19 @@ const ToDoCard = ({
   taskItem,
   DarkMode,
 }: todoCardProp) => {
-  const handlePress = () => {
-    const itemCopy = [...taskItem];
-    itemCopy.splice(index, 1);
-    setTaskItem(itemCopy);
+  const handleDelete = async () => {
+    try {
+      const existingData = await AsyncStorage.getItem("itemData");
+      let DataArray = existingData ? JSON.parse(existingData) : [];
+
+      const updatedData = DataArray.filter(
+        (item1: listProp) => item1.key !== item.key
+      );
+      setTaskItem(updatedData);
+      await AsyncStorage.setItem("itemData", JSON.stringify(updatedData));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,7 +57,7 @@ const ToDoCard = ({
         </View>
       </View>
       <View style={styles.cont1}>
-        <Pressable onPress={handlePress}>
+        <Pressable onPress={handleDelete}>
           <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
         </Pressable>
         <FontAwesome name="check" size={24} color="#1CB674" />

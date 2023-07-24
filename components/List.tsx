@@ -1,17 +1,30 @@
 import { View, StyleSheet, FlatList, useColorScheme, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { light, dark } from "../constants/Colors";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import ToDoCard from "./ToDoCard";
 import { ListProp, DataProp } from "../types/type";
 import FONT from "../constants/FONT";
 import list from "../assets/list";
-// import { getAllData } from "../constants/FUNT";
+import { fetchTaskItems } from "../constants/FUNT";
 
 const List = ({ create, taskItem, setTaskItem }: ListProp) => {
   const DarkMode = useColorScheme() === "dark";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await fetchTaskItems("itemData");
+        setTaskItem(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const renderItem = ({ item, index }: DataProp) => {
     return (
       <ToDoCard

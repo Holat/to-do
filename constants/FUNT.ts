@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { listProp } from "../types/type";
 
 const getRandomLetter = () => {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -30,23 +31,39 @@ const getCurrentDateAndTime = () => {
   return { date, time };
 };
 
-const getAllData = async () => {
+const fetchTaskItems = async (key: string) => {
   try {
-    const allKeys = await AsyncStorage.getAllKeys();
-    const allItems = await AsyncStorage.multiGet(allKeys);
-
-    // Transform the array of arrays to an array of objects
-    const allData = allItems.map(([key, value]) => {
-      if (key !== null && value !== null) {
-        return { key, data: JSON.parse(value) };
-      } else return null;
-    });
-
-    return allData;
+    const existingData = await AsyncStorage.getItem(key);
+    if (existingData) {
+      return JSON.parse(existingData);
+    } else {
+      return [];
+    }
   } catch (error) {
-    console.error("Error getting all data:", error);
+    console.error("Error fetching data:", error);
     return [];
   }
 };
 
-export { getRandomLetter, getRandomNumber, getCurrentDateAndTime, getAllData };
+const deleteItem = async (key: string, itemKey: string) => {
+  try {
+    const existingData = await AsyncStorage.getItem(key);
+    let DataArray = existingData ? JSON.parse(existingData) : [];
+
+    const updatedData = DataArray.filter(
+      (item: listProp) => item.key !== itemKey
+    );
+
+    await AsyncStorage.setItem("itemData", JSON.stringify(updatedData));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getRandomLetter,
+  getRandomNumber,
+  getCurrentDateAndTime,
+  fetchTaskItems,
+  deleteItem,
+};

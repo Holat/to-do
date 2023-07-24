@@ -22,10 +22,6 @@ const Home = () => {
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
   const DarkMode = useColorScheme() === "dark";
 
-  // const handleData = (data) => {
-  //   setTaskItem(data);
-  // };
-
   const handlePress = () => {
     showCreate(true);
   };
