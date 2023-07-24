@@ -8,18 +8,19 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
 import List from "../components/List";
 import FONT from "../constants/FONT";
-import { listProp, HomeScreenProps } from "../types/type";
+import { listProp } from "../types/type";
 import { light, dark } from "../constants/Colors";
 import Head from "../components/Head";
 
-const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
+const Home = () => {
+  const router = useRouter();
   const [create, showCreate] = useState(false);
   const [username, setUser] = useState<string>("");
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
@@ -32,7 +33,7 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const checkUsername = async () => {
     const username = await AsyncStorage.getItem("username");
     if (!username) {
-      navigation.navigate("loginScreen");
+      router.push("./loginScreen");
     } else {
       setUser(username);
     }
@@ -42,11 +43,9 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
     <View
       style={[styles.cont, DarkMode && { backgroundColor: dark.background2 }]}
     >
-      <Link href={"modal"} asChild>
-        <Pressable style={styles.history}>
-          <FontAwesome5 name="history" size={24} color="lightgray" />
-        </Pressable>
-      </Link>
+      <Pressable style={styles.history} onPress={() => router.push("./modal")}>
+        <FontAwesome5 name="history" size={24} color="lightgray" />
+      </Pressable>
       <Header user={username} />
       <View
         style={[
@@ -74,7 +73,6 @@ const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
           create={create}
           showCreate={showCreate}
           setTaskItem={setTaskItem}
-          taskItem={taskItem}
         />
         <List create={create} taskItem={taskItem} setTaskItem={setTaskItem} />
       </View>

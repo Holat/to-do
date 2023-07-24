@@ -1,7 +1,6 @@
 import { View, StyleSheet, FlatList, useColorScheme, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { light, dark } from "../constants/Colors";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import ToDoCard from "./ToDoCard";
@@ -26,13 +25,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
 
   const renderItem = ({ item, index }: DataProp) => {
     return (
-      <ToDoCard
-        item={item}
-        index={index}
-        setTaskItem={setTaskItem}
-        taskItem={taskItem}
-        DarkMode={DarkMode}
-      />
+      <ToDoCard item={item} setTaskItem={setTaskItem} DarkMode={DarkMode} />
     );
   };
 

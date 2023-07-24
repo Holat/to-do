@@ -14,13 +14,7 @@ import FONT from "../constants/FONT";
 import { light, dark } from "../constants/Colors";
 import { getTaskItem } from "../constants/FUNT";
 
-const ToDoCard = ({
-  item,
-  index,
-  setTaskItem,
-  taskItem,
-  DarkMode,
-}: todoCardProp) => {
+const ToDoCard = ({ item, setTaskItem, DarkMode }: todoCardProp) => {
   // deletes the task which does not add the task to the history storage
   const handleDelete = async () => {
     try {

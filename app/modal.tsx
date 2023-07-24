@@ -8,16 +8,15 @@ import {
 } from "react-native";
 import { dark, light } from "../constants/Colors";
 import React, { useEffect, useState } from "react";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { listProp } from "../types/type";
 import { fetchTaskItems } from "../constants/FUNT";
 import FONT from "../constants/FONT";
 import HistoryCard from "../components/historyCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ModalScreenProps } from "../types/type";
 
-const ModalScreen: React.FC<ModalScreenProps> = () => {
+const ModalScreen = () => {
   const [history, setHistory] = useState<listProp[]>([]);
   const DarkMode = useColorScheme() === "dark";
 
@@ -74,6 +73,8 @@ const ModalScreen: React.FC<ModalScreenProps> = () => {
     </View>
   );
 };
+
+export default ModalScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  useColorScheme,
-  View,
-  Pressable,
-  Text,
-  FlatList,
-} from "react-native";
+import { StyleSheet, View, Pressable, Text } from "react-native";
 import { dark } from "../constants/Colors";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
 import { historyCardProp } from "../types/type";
-import { fetchTaskItems } from "../constants/FUNT";
 import FONT from "../constants/FONT";
 
 const HistoryCard = ({ DarkMode, item }: historyCardProp) => {

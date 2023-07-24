@@ -9,14 +9,13 @@ import {
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 import { light } from "../constants/Colors";
 import FONT from "../constants/FONT";
-import { LoginScreenProps } from "../types/type";
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
-  // const navigation = useNavigation();
+const LoginScreen = () => {
+  const route = useRouter();
   const [username, setUser] = useState<string>("");
 
   const saveUser = async () => {
@@ -26,7 +25,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     }
 
     await AsyncStorage.setItem("username", username);
-    navigation.navigate("index");
+    route.push("index");
   };
 
   return (

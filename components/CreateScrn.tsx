@@ -8,9 +8,8 @@ import {
   Alert,
   useColorScheme,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
-import "react-native-get-random-values";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
@@ -20,15 +19,9 @@ import {
 } from "../constants/FUNT";
 import FONT from "../constants/FONT";
 import { createScreenProp, listProp } from "../types/type";
-// import list from "../assets/list";
 import { light, dark } from "../constants/Colors";
 
-const CreateScrn = ({
-  create,
-  showCreate,
-  setTaskItem,
-  taskItem,
-}: createScreenProp) => {
+const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
   const { date, time } = getCurrentDateAndTime();
@@ -39,9 +32,8 @@ const CreateScrn = ({
     try {
       const Data = await AsyncStorage.getItem("itemData");
       let DataArray = Data ? JSON.parse(Data) : [];
-
-      const newItem = { key, name, subject, date, time };
       const newDataArray = [...DataArray, newTask];
+
       setTaskItem(newDataArray);
       await AsyncStorage.setItem("itemData", JSON.stringify(newDataArray));
     } catch (error) {
