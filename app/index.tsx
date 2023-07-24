@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Header from "../components/Header";
@@ -33,7 +33,7 @@ const Home = () => {
   const checkUsername = async () => {
     const username = await AsyncStorage.getItem("username");
     if (!username) {
-      router.push("./loginScreen");
+      router.push("loginScreen");
     } else {
       setUser(username);
     }
@@ -43,7 +43,7 @@ const Home = () => {
     <View
       style={[styles.cont, DarkMode && { backgroundColor: dark.background2 }]}
     >
-      <Pressable style={styles.history} onPress={() => router.push("./modal")}>
+      <Pressable style={styles.history} onPress={() => router.push("modal")}>
         <FontAwesome5 name="history" size={24} color="lightgray" />
       </Pressable>
       <Header user={username} />

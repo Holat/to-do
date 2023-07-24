@@ -15,7 +15,7 @@ import { light } from "../constants/Colors";
 import FONT from "../constants/FONT";
 
 const LoginScreen = () => {
-  const route = useRouter();
+  const router = useRouter();
   const [username, setUser] = useState<string>("");
 
   const saveUser = async () => {
@@ -25,7 +25,7 @@ const LoginScreen = () => {
     }
 
     await AsyncStorage.setItem("username", username);
-    route.push("index");
+    router.push("index");
   };
 
   return (
