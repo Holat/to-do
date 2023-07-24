@@ -25,16 +25,6 @@ type ListProp = {
   setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
 };
 
-// type DataItems = {
-//   key: string;
-//   data: {
-//     name: string;
-//     subject: string;
-//     date: string;
-//     time: string;
-//   };
-// };
-
 type DataProp = {
   item: listProp;
   index: number;
@@ -47,6 +37,11 @@ type todoCardProp = {
   taskItem: listProp[];
   DarkMode: boolean;
 };
+
+type historyCardProp = {
+  DarkMode: boolean;
+  item: listProp;
+};
 export {
   listProp,
   todoCardProp,
@@ -55,4 +50,5 @@ export {
   ListProp,
   // DataItems,
   DataProp,
+  historyCardProp,
 };

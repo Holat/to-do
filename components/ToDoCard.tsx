@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { listProp, todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
 import { light, dark } from "../constants/Colors";
+import { getTaskItem } from "../constants/FUNT";
 
 const ToDoCard = ({
   item,
@@ -20,6 +21,7 @@ const ToDoCard = ({
   taskItem,
   DarkMode,
 }: todoCardProp) => {
+  // deletes the task which does not add the task to the history storage
   const handleDelete = async () => {
     try {
       const existingData = await AsyncStorage.getItem("itemData");
@@ -33,6 +35,33 @@ const ToDoCard = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // adds the completed tasks to the history storage
+  const setHistory = async () => {
+    try {
+      const historyData = await AsyncStorage.getItem("history");
+      const itemData = await AsyncStorage.getItem("itemData");
+
+      let historyArray = historyData ? JSON.parse(historyData) : [];
+      let itemArray = itemData ? JSON.parse(itemData) : [];
+
+      const completedItem = itemArray.find(
+        (item1: listProp) => item1.key === item.key
+      );
+
+      if (completedItem) {
+        itemArray = itemArray.filter(
+          (item1: listProp) => item1.key !== item.key
+        );
+        historyArray.push(completedItem);
+
+        await AsyncStorage.setItem("itemData", JSON.stringify(itemArray));
+        await AsyncStorage.setItem("history", JSON.stringify(historyArray));
+
+        setTaskItem(itemArray);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -60,7 +89,9 @@ const ToDoCard = ({
         <Pressable onPress={handleDelete}>
           <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
         </Pressable>
-        <FontAwesome name="check" size={24} color="#1CB674" />
+        <Pressable onPress={setHistory}>
+          <FontAwesome name="check" size={24} color="#1CB674" />
+        </Pressable>
       </View>
     </View>
   );

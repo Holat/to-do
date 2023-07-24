@@ -7,7 +7,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import ToDoCard from "./ToDoCard";
 import { ListProp, DataProp } from "../types/type";
 import FONT from "../constants/FONT";
-import list from "../assets/list";
 import { fetchTaskItems } from "../constants/FUNT";
 
 const List = ({ create, taskItem, setTaskItem }: ListProp) => {
