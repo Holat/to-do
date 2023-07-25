@@ -23,7 +23,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
     fetchData();
   }, []);
 
-  const renderItem = ({ item, index }: DataProp) => {
+  const renderItem = ({ item }: DataProp) => {
     return (
       <ToDoCard item={item} setTaskItem={setTaskItem} DarkMode={DarkMode} />
     );

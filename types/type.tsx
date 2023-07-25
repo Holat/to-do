@@ -24,7 +24,7 @@ type ListProp = {
 
 type DataProp = {
   item: listProp;
-  index: number;
+  // index: number;
 };
 
 type todoCardProp = {

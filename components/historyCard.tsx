@@ -1,7 +1,7 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import { dark } from "../constants/Colors";
 import React from "react";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import { historyCardProp } from "../types/type";
 import FONT from "../constants/FONT";
@@ -27,11 +27,6 @@ const HistoryCard = ({ DarkMode, item }: historyCardProp) => {
             <Text style={styles.txt2}>{item.time}</Text>
           </View>
         </View>
-      </View>
-      <View style={styles.cont1}>
-        <Pressable onPress={() => console.log("hi")}>
-          <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
-        </Pressable>
       </View>
     </View>
   );
@@ -60,7 +55,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 15,
   },
-
   txt1: {
     fontSize: 15,
     fontFamily: FONT.JBold,
