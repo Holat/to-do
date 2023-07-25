@@ -23,9 +23,8 @@ const LoginScreen = () => {
       Alert.alert("Enter a username");
       return;
     }
-
     await AsyncStorage.setItem("username", username);
-    router.push("index");
+    router.replace("/");
   };
 
   return (

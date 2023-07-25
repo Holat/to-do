@@ -1,9 +1,10 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
-export default function () {
+
+export default function MissingScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      {/* <Stack.Screen name="[missing]" options={{ title: "Oops!" }} /> */}
       <View style={styles.container}>
         <Text style={styles.title}>This screen doesn't exist.</Text>
 

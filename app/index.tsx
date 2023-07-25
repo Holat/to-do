@@ -7,7 +7,7 @@ import {
   useColorScheme,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
