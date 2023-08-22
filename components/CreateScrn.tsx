@@ -60,7 +60,7 @@ const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
         style={{ paddingHorizontal: 20, marginBottom: 20 }}
       >
         <TextInput
-          placeholder="Write task name"
+          placeholder="Write task title"
           style={[
             styles.input,
             { color: "white", fontSize: 18, fontFamily: FONT.JSemibold },

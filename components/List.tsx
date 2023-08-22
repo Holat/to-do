@@ -1,7 +1,15 @@
-import { View, StyleSheet, FlatList, useColorScheme, Text } from "react-native";
-import React, { useEffect } from "react";
+import { View, StyleSheet, useColorScheme, Text } from "react-native";
+import React, { useEffect, useRef } from "react";
 import { light, dark } from "../constants/Colors";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Animated, {
+  FadeInDown,
+  FadeInUp,
+  Transition,
+  EntryExitTransition,
+  CurvedTransition,
+} from "react-native-reanimated";
+import { FlatList } from "react-native-gesture-handler";
 
 import ToDoCard from "./ToDoCard";
 import { ListProp, DataProp } from "../types/type";
@@ -10,6 +18,7 @@ import { fetchTaskItems } from "../constants/FUNT";
 
 const List = ({ create, taskItem, setTaskItem }: ListProp) => {
   const DarkMode = useColorScheme() === "dark";
+  const flatListRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +34,12 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
 
   const renderItem = ({ item }: DataProp) => {
     return (
-      <ToDoCard item={item} setTaskItem={setTaskItem} DarkMode={DarkMode} />
+      <ToDoCard
+        item={item}
+        setTaskItem={setTaskItem}
+        DarkMode={DarkMode}
+        simultaneousHandlers={flatListRef}
+      />
     );
   };
 
@@ -45,7 +59,8 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
   };
 
   return (
-    <View
+    <Animated.View
+      layout={CurvedTransition}
       style={[
         styles.list,
         !create && DarkMode
@@ -59,16 +74,21 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
     >
       {taskItem.length > 0 ? (
         <FlatList
+          ref={flatListRef}
           data={taskItem}
           keyExtractor={(item) => item.key}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           scrollEnabled={true}
+          contentContainerStyle={{
+            borderRadius: 20,
+            paddingHorizontal: 20,
+          }}
         />
       ) : (
         <Empty />
       )}
-    </View>
+    </Animated.View>
   );
 };
 
@@ -79,11 +99,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    paddingHorizontal: 20,
-    paddingTop: 30,
     paddingBottom: 5,
     flex: 1,
     flexGrow: 1,
+    overflow: "hidden",
+    paddingTop: 30,
   },
   scroll: {
     borderTopLeftRadius: 40,

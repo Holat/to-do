@@ -1,113 +1,106 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { listProp, todoCardProp } from "../types/type";
+import { todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
-import { light, dark } from "../constants/Colors";
-import { getTaskItem } from "../constants/FUNT";
+import { dark, light } from "../constants/Colors";
+import { historyDelete, setHistory } from "../constants/FUNT";
+import Animated, { FadeInLeft, FadeOutRight } from "react-native-reanimated";
+import { PanGestureHandler } from "react-native-gesture-handler";
+import useCardAnimation from "./Animation/useCardAnimation";
 
-const ToDoCard = ({ item, setTaskItem, DarkMode }: todoCardProp) => {
+const ToDoCard = ({
+  item,
+  setTaskItem,
+  DarkMode,
+  simultaneousHandlers,
+}: todoCardProp) => {
   // deletes the task which does not add the task to the history storage
   const handleDelete = async () => {
-    try {
-      const existingData = await AsyncStorage.getItem("itemData");
-      let DataArray = existingData ? JSON.parse(existingData) : [];
-
-      const updatedData = DataArray.filter(
-        (item1: listProp) => item1.key !== item.key
-      );
-      setTaskItem(updatedData);
-      await AsyncStorage.setItem("itemData", JSON.stringify(updatedData));
-    } catch (error) {
-      console.log(error);
-    }
+    const updatedData = await historyDelete(item);
+    setTaskItem(updatedData);
   };
+  const { rStyles, operations } = useCardAnimation(handleDelete);
 
   // adds the completed tasks to the history storage
-  const setHistory = async () => {
-    try {
-      const historyData = await AsyncStorage.getItem("history");
-      const itemData = await AsyncStorage.getItem("itemData");
-
-      let historyArray = historyData ? JSON.parse(historyData) : [];
-      let itemArray = itemData ? JSON.parse(itemData) : [];
-
-      const completedItem = itemArray.find(
-        (item1: listProp) => item1.key === item.key
-      );
-
-      if (completedItem) {
-        itemArray = itemArray.filter(
-          (item1: listProp) => item1.key !== item.key
-        );
-        historyArray.push(completedItem);
-
-        await AsyncStorage.setItem("itemData", JSON.stringify(itemArray));
-        await AsyncStorage.setItem("history", JSON.stringify(historyArray));
-
-        setTaskItem(itemArray);
-      }
-    } catch (error) {}
+  const handleSetHistory = async () => {
+    const historyItems = await setHistory(item);
+    setTaskItem(historyItems);
   };
 
   return (
-    <View style={[styles.cont, DarkMode && { backgroundColor: "#001f3f40" }]}>
-      <View style={styles.cont1}>
-        <View
+    <Animated.View
+      style={[styles.main, rStyles.rCardStyle]}
+      entering={FadeInLeft}
+      exiting={FadeOutRight}
+    >
+      <Animated.View style={[styles.abDelete, rStyles.rIconStyle]}>
+        <Ionicons name="ios-trash-outline" size={24} color="#ffffff" />
+      </Animated.View>
+      <PanGestureHandler
+        onGestureEvent={operations.panGestureEvent}
+        simultaneousHandlers={simultaneousHandlers}
+      >
+        <Animated.View
           style={[
-            styles.icon,
+            styles.cont,
             DarkMode && { backgroundColor: dark.background2 },
+            rStyles.rStyle,
           ]}
         >
-          <FontAwesome5 name="clipboard-list" size={24} color="white" />
-        </View>
-        <View>
-          <Text style={[styles.txt1, DarkMode && { color: dark.text }]}>
-            {item.name}
-          </Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.txt2}>{item.date}</Text>
-            <Text style={styles.txt2}>{item.time}</Text>
+          <View style={styles.cont1}>
+            <View style={[styles.icon, { backgroundColor: "white" }]}>
+              <Ionicons
+                name="ios-checkmark-done-sharp"
+                size={24}
+                color={DarkMode ? dark.background2 : light.background2}
+              />
+            </View>
+            <View>
+              <Text style={[styles.txt1, DarkMode && { color: dark.text }]}>
+                {item.name}
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.txt2}>{item.date}</Text>
+                <Text style={styles.txt2}>{item.time}</Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-      <View style={styles.cont1}>
-        <Pressable onPress={handleDelete}>
-          <Ionicons name="ios-trash-outline" size={24} color="#ED187A" />
-        </Pressable>
-        <Pressable onPress={setHistory}>
-          <FontAwesome name="check" size={24} color="#1CB674" />
-        </Pressable>
-      </View>
-    </View>
+          <View style={styles.cont1}>
+            <Pressable onPress={handleSetHistory}>
+              <FontAwesome name="check" size={24} color="#1CB674" />
+            </Pressable>
+          </View>
+        </Animated.View>
+      </PanGestureHandler>
+    </Animated.View>
   );
 };
 
 export default ToDoCard;
 
 const styles = StyleSheet.create({
+  main: {
+    borderRadius: 20,
+    overflow: "hidden",
+    marginBottom: 5,
+    position: "relative",
+  },
   cont: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 20,
-    borderRadius: 20,
+    paddingHorizontal: 20,
     alignItems: "center",
-    marginBottom: 5,
-    backgroundColor: "#1384F820",
+    backgroundColor: "#5F57FF",
+    borderRadius: 20,
+    flex: 1,
   },
   icon: {
     backgroundColor: "#1384F8",
     width: 50,
     height: 50,
-    borderRadius: 6,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -126,5 +119,15 @@ const styles = StyleSheet.create({
     color: "#6E6E6E",
     marginRight: 5,
     fontFamily: FONT.JRegular,
+  },
+  abDelete: {
+    backgroundColor: "#ED187A",
+    position: "absolute",
+    right: 0,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingRight: 20,
+    height: "100%",
   },
 });

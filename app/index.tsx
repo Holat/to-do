@@ -82,7 +82,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: "#1384F8",
+    backgroundColor: "#5F57FF",
     flex: 1,
     paddingTop: StatusBar.currentHeight,
   },

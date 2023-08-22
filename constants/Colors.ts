@@ -6,7 +6,7 @@ const light = {
   text2: "#000",
   text3: "#6E6E6E",
   background1: "#fff",
-  background2: "#1384F8",
+  background2: "#5F57FF",
   background3: "#E7E7E7",
   background3A: "#6E6E6E",
 
