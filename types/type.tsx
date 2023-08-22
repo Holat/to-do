@@ -1,3 +1,5 @@
+import { PanGestureHandlerProps } from "react-native-gesture-handler";
+
 type listProp = {
   key: string;
   name: string;
@@ -27,11 +29,12 @@ type DataProp = {
   // index: number;
 };
 
-type todoCardProp = {
+interface todoCardProp
+  extends Pick<PanGestureHandlerProps, "simultaneousHandlers"> {
   item: listProp;
   setTaskItem: React.Dispatch<React.SetStateAction<listProp[]>>;
   DarkMode: boolean;
-};
+}
 
 type historyCardProp = {
   DarkMode: boolean;

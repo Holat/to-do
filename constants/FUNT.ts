@@ -88,6 +88,49 @@ const deleteItem = async (key: string, itemKey: string) => {
   }
 };
 
+const setHistory = async (item: listProp) => {
+  try {
+    const historyData = await AsyncStorage.getItem("history");
+    const itemData = await AsyncStorage.getItem("itemData");
+
+    let historyArray = historyData ? JSON.parse(historyData) : [];
+    let itemArray = itemData ? JSON.parse(itemData) : [];
+
+    const completedItem = itemArray.find(
+      (item1: listProp) => item1.key === item.key
+    );
+
+    if (completedItem) {
+      itemArray = itemArray.filter((item1: listProp) => item1.key !== item.key);
+      historyArray.push(completedItem);
+
+      await AsyncStorage.setItem("itemData", JSON.stringify(itemArray));
+      await AsyncStorage.setItem("history", JSON.stringify(historyArray));
+
+      return itemArray;
+    }
+  } catch (error) {
+    console.log("somthing went wrong");
+    return [];
+  }
+};
+
+const historyDelete = async (item: listProp) => {
+  try {
+    const existingData = await AsyncStorage.getItem("itemData");
+    let DataArray = existingData ? JSON.parse(existingData) : [];
+
+    const updatedData = DataArray.filter(
+      (item1: listProp) => item1.key !== item.key
+    );
+    await AsyncStorage.setItem("itemData", JSON.stringify(updatedData));
+    return updatedData;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export {
   getRandomLetter,
   getRandomNumber,
@@ -95,4 +138,6 @@ export {
   fetchTaskItems,
   deleteItem,
   getTaskItem,
+  setHistory,
+  historyDelete,
 };
