@@ -1,12 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { FontAwesome5, Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 
 import { todoCardProp } from "../types/type";
 import FONT from "../constants/FONT";
 import { dark, light } from "../constants/Colors";
 import { historyDelete, setHistory } from "../constants/FUNT";
-import Animated, { FadeInLeft, FadeOutRight } from "react-native-reanimated";
+import Animated, { FadeInLeft, FadeOutLeft } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import useCardAnimation from "./Animation/useCardAnimation";
 
@@ -31,16 +31,24 @@ const ToDoCard = ({
 
   return (
     <Animated.View
-      style={[styles.main, rStyles.rCardStyle]}
+      exiting={FadeOutLeft}
       entering={FadeInLeft}
-      exiting={FadeOutRight}
+      style={[styles.main, rStyles.rCardStyle]}
     >
       <Animated.View style={[styles.abDelete, rStyles.rIconStyle]}>
         <Ionicons name="ios-trash-outline" size={24} color="#ffffff" />
       </Animated.View>
+      {/**
+       * failOffsetY={[-5, 5]}
+       * activeOffsetX={[-5, 5]}
+       * simultaneousHandlers={simultaneousHandlers}
+       * Props used to prevent the gesture of the card from interfering with flatlist scroll
+       */}
       <PanGestureHandler
-        onGestureEvent={operations.panGestureEvent}
+        failOffsetY={[-5, 5]}
+        activeOffsetX={[-5, 5]}
         simultaneousHandlers={simultaneousHandlers}
+        onGestureEvent={operations.panGestureEvent}
       >
         <Animated.View
           style={[
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
   },
   txt2: {
     fontSize: 12,
-    color: "#6E6E6E",
+    color: "#CCCCCC",
     marginRight: 5,
     fontFamily: FONT.JRegular,
   },

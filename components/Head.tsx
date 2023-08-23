@@ -1,12 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  useColorScheme,
-} from "react-native";
+import { Text, StyleSheet, Pressable, useColorScheme } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import Animated, { FadeInUp } from "react-native-reanimated";
 
 import { light, dark } from "../constants/Colors";
 import { showCreateProp } from "../types/type";
@@ -15,7 +10,10 @@ import FONT from "../constants/FONT";
 const Head = ({ showCreate }: showCreateProp) => {
   const DarkMode = useColorScheme() === "dark";
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+    <Animated.View
+      entering={FadeInUp}
+      style={{ flexDirection: "row", alignItems: "center", gap: 5 }}
+    >
       <Pressable onPress={() => showCreate(false)}>
         <Ionicons
           name="arrow-back-circle-outline"
@@ -26,7 +24,7 @@ const Head = ({ showCreate }: showCreateProp) => {
       <Text style={[styles.header1Txt, DarkMode && { color: dark.text }]}>
         Create To-do
       </Text>
-    </View>
+    </Animated.View>
   );
 };
 

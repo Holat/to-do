@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import Header from "../components/Header";
 import CreateScrn from "../components/CreateScrn";
@@ -18,11 +19,12 @@ import FONT from "../constants/FONT";
 import { listProp } from "../types/type";
 import { light, dark } from "../constants/Colors";
 import Head from "../components/Head";
+import createCardAnimation from "../components/Animation/createCardAnimation";
 
 const Home = () => {
   const router = useRouter();
   const [create, showCreate] = useState(false);
-  const [username, setUser] = useState<string>("");
+  const [username, setUser] = useState("");
   const [taskItem, setTaskItem] = useState<listProp[]>([]);
   const DarkMode = useColorScheme() === "dark";
 
@@ -38,6 +40,8 @@ const Home = () => {
       setUser(username);
     }
   };
+
+  const rStyle = createCardAnimation(create);
 
   return (
     <View
@@ -59,21 +63,25 @@ const Home = () => {
             : {},
         ]}
       >
-        <Pressable
-          onPress={() => showCreate(true)}
-          style={[create ? styles.header1 : styles.header]}
-        >
-          {create ? (
-            <Head showCreate={showCreate} />
-          ) : (
-            <Text style={styles.headerTxt}>Tap To Create</Text>
-          )}
-        </Pressable>
-        <CreateScrn
-          create={create}
-          showCreate={showCreate}
-          setTaskItem={setTaskItem}
-        />
+        <Animated.View style={[rStyle]}>
+          <Pressable
+            onPress={() => showCreate(true)}
+            style={[create ? styles.header1 : styles.header]}
+          >
+            {create ? (
+              <Head showCreate={showCreate} />
+            ) : (
+              <Animated.Text entering={FadeInDown} style={styles.headerTxt}>
+                Tap To Create
+              </Animated.Text>
+            )}
+          </Pressable>
+          <CreateScrn
+            create={create}
+            showCreate={showCreate}
+            setTaskItem={setTaskItem}
+          />
+        </Animated.View>
         <List create={create} taskItem={taskItem} setTaskItem={setTaskItem} />
       </View>
     </View>
