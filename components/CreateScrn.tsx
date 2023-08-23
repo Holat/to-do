@@ -1,5 +1,4 @@
 import {
-  View,
   StyleSheet,
   Platform,
   Pressable,
@@ -57,7 +56,7 @@ const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ paddingHorizontal: 20, marginBottom: 20 }}
+        style={{ paddingHorizontal: 20, marginBottom: 20, flex: 1 }}
       >
         <TextInput
           placeholder="Write task title"
@@ -71,22 +70,20 @@ const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
         />
         <TextInput
           placeholder="Add Subject"
+          multiline={true}
+          numberOfLines={5}
           style={[
             styles.input,
             {
               backgroundColor: DarkMode ? dark.background3 : light.background1,
               color: DarkMode ? dark.text : light.text2,
+              textAlignVertical: "top",
+              flex: 1,
             },
           ]}
           onChangeText={(text) => setSubject(text)}
           placeholderTextColor={DarkMode ? dark.text3 : light.text3}
         />
-        <View
-          style={{
-            height: 200,
-            backgroundColor: DarkMode ? dark.background1 : light.background1,
-          }}
-        ></View>
         <Pressable
           style={[
             styles.create,
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT.JRegular,
     paddingVertical: 15,
     paddingHorizontal: 20,
-    backgroundColor: "#1384F8",
+    backgroundColor: light.background2,
     borderRadius: 10,
     marginBottom: 15,
     shadowColor: "#000",
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   create: {
-    backgroundColor: "#1384F8",
+    backgroundColor: light.background2,
     borderRadius: 50,
     marginTop: 15,
     width: 50,
@@ -134,7 +131,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-end",
-    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

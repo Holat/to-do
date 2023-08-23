@@ -1,14 +1,13 @@
-import { View, StyleSheet, useColorScheme, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  useColorScheme,
+  Text,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useEffect, useRef } from "react";
 import { light, dark } from "../constants/Colors";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  Transition,
-  EntryExitTransition,
-  CurvedTransition,
-} from "react-native-reanimated";
 import { FlatList } from "react-native-gesture-handler";
 
 import ToDoCard from "./ToDoCard";
@@ -59,8 +58,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
   };
 
   return (
-    <Animated.View
-      layout={CurvedTransition}
+    <KeyboardAvoidingView
       style={[
         styles.list,
         !create && DarkMode
@@ -88,7 +86,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
       ) : (
         <Empty />
       )}
-    </Animated.View>
+    </KeyboardAvoidingView>
   );
 };
 
