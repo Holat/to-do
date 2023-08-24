@@ -81,6 +81,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
           contentContainerStyle={{
             borderRadius: 20,
             paddingHorizontal: 20,
+            flex: 1,
           }}
         />
       ) : (
