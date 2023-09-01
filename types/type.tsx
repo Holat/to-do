@@ -6,6 +6,7 @@ type listProp = {
   subject: string;
   date: string;
   time: string;
+  icon: string;
 };
 
 type showCreateProp = {
@@ -26,7 +27,6 @@ type ListProp = {
 
 type DataProp = {
   item: listProp;
-  // index: number;
 };
 
 interface todoCardProp
