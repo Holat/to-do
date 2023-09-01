@@ -9,6 +9,7 @@ import { historyDelete, setHistory } from "../constants/FUNT";
 import Animated, { FadeInLeft, FadeOutLeft } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import useCardAnimation from "./Animation/useCardAnimation";
+import Icon from "./Icon";
 
 const ToDoCard = ({
   item,
@@ -58,13 +59,7 @@ const ToDoCard = ({
           ]}
         >
           <View style={styles.cont1}>
-            <View style={[styles.icon, { backgroundColor: "white" }]}>
-              <Ionicons
-                name="ios-checkmark-done-sharp"
-                size={24}
-                color={DarkMode ? dark.background2 : light.background2}
-              />
-            </View>
+            <Icon icon={item.icon} opacity={1} />
             <View>
               <Text style={[styles.txt1, DarkMode && { color: dark.text }]}>
                 {item.name}
@@ -100,17 +95,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 20,
     alignItems: "center",
-    backgroundColor: "#5F57FF",
+    backgroundColor: light.background2,
     borderRadius: 20,
     flex: 1,
-  },
-  icon: {
-    backgroundColor: "#1384F8",
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
   },
   cont1: {
     flexDirection: "row",
