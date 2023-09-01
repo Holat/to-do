@@ -1,23 +1,16 @@
 import { StyleSheet, View, Text } from "react-native";
 import { dark } from "../constants/Colors";
 import React from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 import { historyCardProp } from "../types/type";
 import FONT from "../constants/FONT";
+import Icon from "./Icon";
 
 const HistoryCard = ({ DarkMode, item }: historyCardProp) => {
   return (
     <View style={[styles.cont, DarkMode && { backgroundColor: "#001f3f40" }]}>
       <View style={styles.cont1}>
-        <View
-          style={[
-            styles.icon,
-            DarkMode && { backgroundColor: dark.background2 },
-          ]}
-        >
-          <FontAwesome5 name="clipboard-list" size={24} color="white" />
-        </View>
+        <Icon icon={item.icon} opacity={1} />
         <View>
           <Text style={[styles.txt1, DarkMode && { color: dark.text }]}>
             {item.name}
