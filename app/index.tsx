@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   StyleSheet,
   StatusBar,
   Pressable,
@@ -90,7 +89,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   cont: {
-    backgroundColor: "#5F57FF",
+    backgroundColor: light.background2,
     flex: 1,
     paddingTop: StatusBar.currentHeight,
   },
