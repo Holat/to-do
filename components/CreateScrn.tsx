@@ -6,8 +6,9 @@ import {
   KeyboardAvoidingView,
   Alert,
   useColorScheme,
+  View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Entypo } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -19,10 +20,13 @@ import {
 import FONT from "../constants/FONT";
 import { createScreenProp, listProp } from "../types/type";
 import { light, dark } from "../constants/Colors";
+import Icon from "./Icon";
+import Icons from "../constants/Icons";
 
 const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
   const [name, setName] = useState("");
   const [subject, setSubject] = useState("");
+  const [icon, setIcon] = useState("note");
   const { date, time } = getCurrentDateAndTime();
   const key = getRandomLetter() + getRandomNumber();
   const DarkMode = useColorScheme() === "dark";
@@ -44,19 +48,28 @@ const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
     if (!name || !subject || !date || !time) {
       Alert.alert("Enter A Task");
     } else {
-      const newItem = { key, name, subject, date, time };
+      const newItem = { key, name, subject, date, time, icon };
       setData(newItem);
       showCreate(false);
       setName("");
       setSubject("");
+      setIcon("note");
     }
   };
+
+  const handleIconPress = useCallback((icon: string) => {
+    setIcon(icon);
+  }, []);
 
   if (create) {
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ paddingHorizontal: 20, marginBottom: 20, flex: 1 }}
+        style={{
+          paddingHorizontal: 20,
+          marginBottom: 20,
+          flex: 1,
+        }}
       >
         <TextInput
           placeholder="Write task title"
@@ -84,6 +97,19 @@ const CreateScrn = ({ create, showCreate, setTaskItem }: createScreenProp) => {
           onChangeText={(text) => setSubject(text)}
           placeholderTextColor={DarkMode ? dark.text3 : light.text3}
         />
+        <View style={styles.iconCont}>
+          {Icons.map(({ name }) => {
+            const opacity = name === icon ? 1 : 0.5;
+            return (
+              <Icon
+                key={name}
+                icon={name}
+                handleIconPress={handleIconPress}
+                opacity={opacity}
+              />
+            );
+          })}
+        </View>
         <Pressable
           style={[
             styles.create,
@@ -138,5 +164,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  icon: {
+    width: 50,
+    aspectRatio: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+  },
+  iconCont: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 5,
   },
 });

@@ -1,10 +1,4 @@
-import {
-  View,
-  StyleSheet,
-  useColorScheme,
-  Text,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, StyleSheet, useColorScheme, Text } from "react-native";
 import React, { useEffect, useRef } from "react";
 import { light, dark } from "../constants/Colors";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -58,7 +52,7 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
   };
 
   return (
-    <KeyboardAvoidingView
+    <View
       style={[
         styles.list,
         !create && DarkMode
@@ -81,13 +75,12 @@ const List = ({ create, taskItem, setTaskItem }: ListProp) => {
           contentContainerStyle={{
             borderRadius: 20,
             paddingHorizontal: 20,
-            flex: 1,
           }}
         />
       ) : (
         <Empty />
       )}
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -95,7 +88,7 @@ export default List;
 
 const styles = StyleSheet.create({
   list: {
-    backgroundColor: "white",
+    backgroundColor: light.background1,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingBottom: 5,
