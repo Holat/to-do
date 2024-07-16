@@ -24,5 +24,5 @@ const Icons = [
     color: "#F69223",
   },
 ];
-
+// this will be added here for one reason or the other
 export default Icons;
