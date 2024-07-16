@@ -16,7 +16,7 @@ const Icons = [
     color: "#1FB473",
   },
   {
-    name: "meet",
+    name: "mreet",
     color: "#EC1F78",
   },
   {
